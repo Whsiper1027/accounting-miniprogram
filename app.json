@@ -1,0 +1,33 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/history/history",
+    "pages/category/category"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#07c160",
+    "navigationBarTitleText": "随手记账",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#07c160",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "记账"
+      },
+      {
+        "pagePath": "pages/history/history",
+        "text": "账本"
+      },
+      {
+        "pagePath": "pages/category/category",
+        "text": "分类"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,151 @@
+page {
+  background-color: #f5f5f5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.container {
+  padding: 20rpx;
+}
+
+/* 记账卡片 */
+.record-card {
+  background: white;
+  border-radius: 16rpx;
+  padding: 40rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.1);
+}
+
+/* 类型选择 */
+.type-section {
+  margin-bottom: 40rpx;
+}
+
+.type-label {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.type-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+
+.type-item {
+  padding: 20rpx 32rpx;
+  background: #f5f5f5;
+  border-radius: 32rpx;
+  font-size: 28rpx;
+  color: #333;
+  transition: all 0.3s;
+}
+
+.type-item.active {
+  background: #07c160;
+  color: white;
+}
+
+/* 金额输入 */
+.amount-section {
+  margin-bottom: 40rpx;
+}
+
+.amount-label {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.amount-input-wrapper {
+  display: flex;
+  align-items: center;
+  border-bottom: 2rpx solid #e5e5e5;
+  padding-bottom: 20rpx;
+}
+
+.currency {
+  font-size: 48rpx;
+  color: #07c160;
+  font-weight: bold;
+  margin-right: 20rpx;
+}
+
+.amount-input {
+  flex: 1;
+  font-size: 56rpx;
+  font-weight: bold;
+  color: #333;
+  height: 80rpx;
+}
+
+/* 备注 */
+.note-section {
+  margin-bottom: 40rpx;
+}
+
+.note-input {
+  width: 100%;
+  height: 100rpx;
+  background: #f5f5f5;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+}
+
+/* 提交按钮 */
+.submit-btn {
+  background: #07c160;
+  color: white;
+  border-radius: 48rpx;
+  height: 96rpx;
+  line-height: 96rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.submit-btn:active {
+  opacity: 0.8;
+}
+
+/* 汇总卡片 */
+.summary-card {
+  background: linear-gradient(135deg, #07c160 0%, #10b981 100%);
+  border-radius: 16rpx;
+  padding: 40rpx;
+  color: white;
+}
+
+.summary-title {
+  font-size: 28rpx;
+  opacity: 0.9;
+  margin-bottom: 10rpx;
+}
+
+.summary-amount {
+  font-size: 56rpx;
+  font-weight: bold;
+}
+
+.summary-row {
+  display: flex;
+  margin-top: 30rpx;
+}
+
+.summary-item {
+  flex: 1;
+}
+
+.summary-item-label {
+  font-size: 24rpx;
+  opacity: 0.8;
+}
+
+.summary-item-value {
+  font-size: 40rpx;
+  font-weight: bold;
+  margin-top: 10rpx;
+}

@@ -1,0 +1,45 @@
+<view class="container">
+  <!-- 提示文字 -->
+  <view class="header-tips">
+    <text>轻触编辑，长按删除自定义分类</text>
+  </view>
+
+  <!-- 分类网格 - 4列布局 -->
+  <view class="category-grid">
+    <view wx:for="{{categories}}" wx:key="id" class="grid-item" bindtap="editCategory" data-id="{{item.id}}" bindlongpress="showDeleteAction" data-item="{{item}}">
+      <view class="icon-circle">
+        <text class="icon-text">{{item.name}}</text>
+      </view>
+    </view>
+
+    <!-- 添加按钮 -->
+    <view class="grid-item add-item" bindtap="showAddPanel">
+      <view class="icon-circle add-circle">
+        <text class="icon-text">+</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部编辑面板 -->
+  <view wx:if="{{showPanel}}" class="panel-mask" bindtap="hidePanel">
+    <view class="panel-content" catchtap="stopPropagation">
+      <view class="panel-header">
+        <view class="panel-title">{{isEditing ? '编辑分类' : '添加分类'}}</view>
+        <view class="panel-close" bindtap="hidePanel">✕</view>
+      </view>
+
+      <!-- 名称输入 -->
+      <view class="input-section">
+        <text class="section-label">分类名称</text>
+        <input class="name-input" placeholder="请输入分类名称" value="{{inputValue}}" bindinput="onInput" focus="{{showPanel}}" />
+      </view>
+
+      <!-- 按钮 -->
+      <view class="panel-buttons">
+        <button wx:if="{{isEditing && currentItem && !currentItem.builtin}}" class="btn-delete" bindtap="confirmDeleteFromPanel">删除</button>
+        <button class="btn-cancel" bindtap="hidePanel">取消</button>
+        <button class="btn-confirm" bindtap="confirmSave">确定</button>
+      </view>
+    </view>
+  </view>
+</view>

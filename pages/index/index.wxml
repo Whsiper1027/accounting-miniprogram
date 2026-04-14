@@ -1,0 +1,64 @@
+<view class="container">
+  <!-- 汇总卡片 -->
+  <view class="summary-card">
+    <view class="summary-title">本月支出</view>
+    <view class="summary-amount">¥{{monthTotal}}</view>
+    <view class="summary-row">
+      <view class="summary-item">
+        <view class="summary-item-label">今日</view>
+        <view class="summary-item-value">¥{{todayTotal}}</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-item-label">本周</view>
+        <view class="summary-item-value">¥{{weekTotal}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 记账卡片 -->
+  <view class="record-card">
+    <!-- 类型选择 -->
+    <view class="type-section">
+      <text class="type-label">消费类型</text>
+      <view class="type-list">
+        <view
+          wx:for="{{types}}"
+          wx:key="index"
+          class="type-item {{selectedType === item ? 'active' : ''}}"
+          bindtap="selectType"
+          data-type="{{item}}"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 金额输入 -->
+    <view class="amount-section">
+      <text class="amount-label">金额</text>
+      <view class="amount-input-wrapper">
+        <text class="currency">¥</text>
+        <input
+          class="amount-input"
+          type="digit"
+          placeholder="0.00"
+          value="{{amount}}"
+          bindinput="onAmountInput"
+        />
+      </view>
+    </view>
+
+    <!-- 备注 -->
+    <view class="note-section">
+      <input
+        class="note-input"
+        placeholder="添加备注（可选）"
+        value="{{note}}"
+        bindinput="onNoteInput"
+      />
+    </view>
+
+    <!-- 提交按钮 -->
+    <button class="submit-btn" bindtap="submitRecord">记一笔</button>
+  </view>
+</view>

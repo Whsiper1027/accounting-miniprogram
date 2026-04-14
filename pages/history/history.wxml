@@ -1,0 +1,94 @@
+<view class="container">
+  <!-- 筛选区 -->
+  <view class="filter-section">
+    <view class="filter-tabs">
+      <view class="filter-tab {{showMonthDropdown ? 'active' : ''}}" bindtap="toggleMonthDropdown">
+        <text>{{selectedMonth}}</text>
+        <text class="arrow {{showMonthDropdown ? 'up' : ''}}">▼</text>
+      </view>
+      <view class="filter-tab {{showTypeDropdown ? 'active' : ''}}" bindtap="toggleTypeDropdown">
+        <text>{{types[selectedTypeIndex] || '全部'}}</text>
+        <text class="arrow {{showTypeDropdown ? 'up' : ''}}">▼</text>
+      </view>
+    </view>
+
+    <!-- 月份下拉列表 -->
+    <view wx:if="{{showMonthDropdown}}" class="dropdown-panel">
+      <scroll-view scroll-y class="dropdown-scroll">
+        <view wx:for="{{monthOptions}}" wx:key="value" class="dropdown-item {{selectedMonth === item.value ? 'active' : ''}}" bindtap="selectMonth" data-value="{{item.value}}">
+          <text>{{item.label}}</text>
+          <text wx:if="{{selectedMonth === item.value}}" class="check-mark">✓</text>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 分类下拉列表 -->
+    <view wx:if="{{showTypeDropdown}}" class="dropdown-panel">
+      <scroll-view scroll-y class="dropdown-scroll">
+        <view wx:for="{{types}}" wx:key="*this" class="dropdown-item {{selectedTypeIndex === index ? 'active' : ''}}" bindtap="selectType" data-index="{{index}}">
+          <text>{{item}}</text>
+          <text wx:if="{{selectedTypeIndex === index}}" class="check-mark">✓</text>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <!-- 统计概览 -->
+  <view class="overview">
+    <view class="overview-item">
+      <text class="label">总支出</text>
+      <text class="amount">¥{{totalAmount}}</text>
+    </view>
+    <view class="overview-item">
+      <text class="label">笔数</text>
+      <text class="amount">{{recordCount}}</text>
+    </view>
+    <view class="overview-item">
+      <text class="label">日均</text>
+      <text class="amount">¥{{dailyAvg}}</text>
+    </view>
+  </view>
+
+  <!-- 饼图统计 -->
+  <view wx:if="{{categoryStats.length > 0}}" class="section">
+    <view class="section-title">支出构成</view>
+
+    <!-- 圆环饼图 -->
+    <view class="pie-chart-container">
+      <view class="pie-chart" style="background: conic-gradient({{pieGradient}});">
+        <view class="pie-hole">
+          <text class="pie-total">¥{{totalAmount}}</text>
+          <text class="pie-label">总支出</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 图例列表 -->
+    <view class="legend-list">
+      <view wx:for="{{categoryStats}}" wx:key="name" class="legend-item">
+        <view class="legend-dot" style="background: {{item.color}};"></view>
+        <text class="legend-name">{{item.name}}</text>
+        <text class="legend-percent">{{item.percent}}%</text>
+        <text class="legend-amount">¥{{item.amount}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 明细列表 -->
+  <view class="section">
+    <view class="section-title">明细记录</view>
+    <view wx:if="{{records.length === 0}}" class="empty">
+      <text>本月暂无记录</text>
+    </view>
+    <view wx:for="{{records}}" wx:key="_id" class="record-item">
+      <view class="record-left">
+        <text class="record-type">{{item.type}}</text>
+        <text class="record-note">{{item.note || '无备注'}}</text>
+      </view>
+      <view class="record-right">
+        <text class="record-amount">-¥{{item.amount}}</text>
+        <text class="record-time">{{item.formattedTime}}</text>
+      </view>
+    </view>
+  </view>
+</view>
