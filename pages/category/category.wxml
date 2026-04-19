@@ -1,9 +1,7 @@
 <view class="container">
   <view class="page-header">
-    <text class="page-eyebrow">Library</text>
     <view class="page-header-row">
       <text class="page-title">分类</text>
-      <text class="page-subtitle">整理你的消费标签，让账本保持清晰</text>
     </view>
   </view>
 
