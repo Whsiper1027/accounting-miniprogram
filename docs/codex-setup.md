@@ -190,6 +190,38 @@ git status
 
 先清理你自己的改动，再让 runner 继续工作。
 
+### 3. 仓库没有配置 origin
+
+原因：
+
+- 当前仓库还没有任何 Git remote
+- 或者远端名字不是 `origin`
+
+排查：
+
+```bash
+git remote -v
+```
+
+如果输出为空，先补一个远端，例如：
+
+```bash
+git remote add origin <你的 GitHub 仓库地址>
+git push -u origin codex-auto
+```
+
+如果你的远端名字不是 `origin`，可以在 `launchd` 的环境变量里加：
+
+```text
+CODEX_REMOTE_NAME=<你的远端名>
+```
+
+或者手动运行：
+
+```bash
+CODEX_REMOTE_NAME=<你的远端名> ~/bin/codex_runner.sh <仓库绝对路径>
+```
+
 ### 3. validate_miniprogram.sh 失败
 
 原因通常是：

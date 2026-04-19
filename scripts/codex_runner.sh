@@ -16,6 +16,7 @@ set -euo pipefail
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${PATH:-}"
 
 BRANCH_NAME="codex-auto"
+REMOTE_NAME="${CODEX_REMOTE_NAME:-origin}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DEFAULT_LOG_DIR="${HOME}/Library/Logs/whisper-codex"
 LOG_DIR="${CODEX_LOG_DIR:-$DEFAULT_LOG_DIR}"
@@ -74,12 +75,16 @@ if [[ -n "$WORKTREE_STATUS" ]]; then
   fail "工作区不干净，已停止自动拉取，请先处理本地修改"
 fi
 
-log "获取 origin/${BRANCH_NAME} 最新信息"
-git fetch --quiet origin "$BRANCH_NAME"
+if ! git remote get-url "$REMOTE_NAME" >/dev/null 2>&1; then
+  fail "未配置 Git remote '${REMOTE_NAME}'。请先执行 git remote add ${REMOTE_NAME} <repo-url>"
+fi
 
-REMOTE_REF="refs/remotes/origin/${BRANCH_NAME}"
+log "获取 ${REMOTE_NAME}/${BRANCH_NAME} 最新信息"
+git fetch --quiet "$REMOTE_NAME" "$BRANCH_NAME"
+
+REMOTE_REF="refs/remotes/${REMOTE_NAME}/${BRANCH_NAME}"
 if ! git show-ref --verify --quiet "$REMOTE_REF"; then
-  fail "远端分支不存在: origin/${BRANCH_NAME}"
+  fail "远端分支不存在: ${REMOTE_NAME}/${BRANCH_NAME}"
 fi
 
 LATEST_REMOTE_COMMIT="$(git rev-parse "$REMOTE_REF")"
@@ -98,10 +103,10 @@ if git show-ref --verify --quiet "refs/heads/${BRANCH_NAME}"; then
   git checkout "$BRANCH_NAME" >/dev/null
 else
   log "本地不存在 ${BRANCH_NAME}，创建跟踪分支"
-  git checkout -b "$BRANCH_NAME" --track "origin/${BRANCH_NAME}" >/dev/null
+  git checkout -b "$BRANCH_NAME" --track "${REMOTE_NAME}/${BRANCH_NAME}" >/dev/null
 fi
 
-log "快进到 origin/${BRANCH_NAME}"
+log "快进到 ${REMOTE_NAME}/${BRANCH_NAME}"
 git merge --ff-only "$REMOTE_REF" >/dev/null
 
 for cmd in "${VALIDATION_COMMANDS[@]}"; do
