@@ -5,15 +5,16 @@
     "pages/category/category"
   ],
   "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#07c160",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#f2f2f7",
     "navigationBarTitleText": "随手记账",
-    "navigationBarTextStyle": "white"
+    "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "color": "#999999",
-    "selectedColor": "#07c160",
-    "backgroundColor": "#ffffff",
+    "color": "#8e8e93",
+    "selectedColor": "#2ea36a",
+    "backgroundColor": "#f9f9fb",
+    "borderStyle": "white",
     "list": [
       {
         "pagePath": "pages/index/index",

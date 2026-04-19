@@ -1,4 +1,12 @@
 <view class="container">
+  <view class="page-header">
+    <text class="page-eyebrow">Today</text>
+    <view class="page-header-row">
+      <text class="page-title">记一笔</text>
+      <text class="page-subtitle">像 iPhone 一样清爽地记录日常支出</text>
+    </view>
+  </view>
+
   <!-- 汇总卡片 -->
   <view class="summary-card">
     <view class="summary-title">本月支出</view>
@@ -17,6 +25,11 @@
 
   <!-- 记账卡片 -->
   <view class="record-card">
+    <view class="card-header">
+      <text class="card-title">新建记录</text>
+      <text class="card-caption">选择分类，输入金额和备注</text>
+    </view>
+
     <!-- 类型选择 -->
     <view class="type-section">
       <text class="type-label">消费类型</text>

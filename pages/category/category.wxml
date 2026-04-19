@@ -1,7 +1,15 @@
 <view class="container">
+  <view class="page-header">
+    <text class="page-eyebrow">Library</text>
+    <view class="page-header-row">
+      <text class="page-title">分类</text>
+      <text class="page-subtitle">整理你的消费标签，让账本保持清晰</text>
+    </view>
+  </view>
+
   <!-- 提示文字 -->
   <view class="header-tips">
-    <text>轻触编辑，长按删除自定义分类</text>
+    <text>默认分类不可编辑删除，自定义分类轻触编辑、长按删除</text>
   </view>
 
   <!-- 分类网格 - 4列布局 -->
@@ -23,8 +31,12 @@
   <!-- 底部编辑面板 -->
   <view wx:if="{{showPanel}}" class="panel-mask" bindtap="hidePanel">
     <view class="panel-content" catchtap="stopPropagation">
+      <view class="panel-grabber"></view>
       <view class="panel-header">
-        <view class="panel-title">{{isEditing ? '编辑分类' : '添加分类'}}</view>
+        <view class="panel-heading">
+          <view class="panel-title">{{isEditing ? '编辑分类' : '添加分类'}}</view>
+          <view class="panel-subtitle">{{isEditing ? '修改名称后，首页和账本会同步使用新分类' : '创建一个新的消费分类，方便后续筛选和统计'}}</view>
+        </view>
         <view class="panel-close" bindtap="hidePanel">✕</view>
       </view>
 

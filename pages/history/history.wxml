@@ -1,15 +1,26 @@
 <view class="container">
+  <view class="page-header">
+    <text class="page-eyebrow">Insights</text>
+    <view class="page-header-row">
+      <text class="page-title">账本</text>
+      <text class="page-subtitle">按月份和分类回看每一笔支出</text>
+    </view>
+  </view>
+
   <!-- 筛选区 -->
   <view class="filter-section">
     <view class="filter-tabs">
       <view class="filter-tab {{showMonthDropdown ? 'active' : ''}}" bindtap="toggleMonthDropdown">
-        <text>{{selectedMonth}}</text>
+        <text>{{selectedMonthLabel}}</text>
         <text class="arrow {{showMonthDropdown ? 'up' : ''}}">▼</text>
       </view>
       <view class="filter-tab {{showTypeDropdown ? 'active' : ''}}" bindtap="toggleTypeDropdown">
-        <text>{{types[selectedTypeIndex] || '全部'}}</text>
+        <text>{{selectedTypeLabel}}</text>
         <text class="arrow {{showTypeDropdown ? 'up' : ''}}">▼</text>
       </view>
+    </view>
+    <view class="filter-helper">
+      <text>当前查看：{{selectedMonthLabel}} · {{selectedTypeLabel}}</text>
     </view>
 
     <!-- 月份下拉列表 -->
@@ -51,7 +62,10 @@
 
   <!-- 饼图统计 -->
   <view wx:if="{{categoryStats.length > 0}}" class="section">
-    <view class="section-title">支出构成</view>
+    <view class="section-head">
+      <view class="section-title">支出构成</view>
+      <view class="section-meta">{{categoryStats.length}} 个分类</view>
+    </view>
 
     <!-- 圆环饼图 -->
     <view class="pie-chart-container">
@@ -76,9 +90,12 @@
 
   <!-- 明细列表 -->
   <view class="section">
-    <view class="section-title">明细记录</view>
+    <view class="section-head">
+      <view class="section-title">明细记录</view>
+      <view class="section-meta">{{recordCount}} 笔</view>
+    </view>
     <view wx:if="{{records.length === 0}}" class="empty">
-      <text>本月暂无记录</text>
+      <text>{{emptyText}}</text>
     </view>
     <view wx:for="{{records}}" wx:key="_id" class="record-item">
       <view class="record-left">

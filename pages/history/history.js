@@ -2,8 +2,10 @@ Page({
   data: {
     types: ['全部'],
     selectedType: '',
+    selectedTypeLabel: '全部',
     selectedTypeIndex: 0,
     selectedMonth: '',
+    selectedMonthLabel: '',
     currentMonth: '',
     monthOptions: [],
     records: [],
@@ -12,7 +14,8 @@ Page({
     dailyAvg: 0,
     categoryStats: [],
     showMonthDropdown: false,
-    showTypeDropdown: false
+    showTypeDropdown: false,
+    emptyText: '暂无记录'
   },
 
   onLoad() {
@@ -24,6 +27,7 @@ Page({
 
     this.setData({
       selectedMonth: currentMonth,
+      selectedMonthLabel: `${year}年${parseInt(month)}月`,
       currentMonth: currentMonth
     })
 
@@ -61,20 +65,28 @@ Page({
   loadTypes() {
     // 从本地存储读取分类
     const categories = wx.getStorageSync('accounting_categories') || []
+    let types = ['全部']
 
     // 如果存储为空，初始化默认分类
     if (categories.length === 0) {
       const defaultTypes = ['餐饮', '交通', '购物', '游戏', '羽毛球', '理发', '住宿']
-      this.setData({
-        types: ['全部', ...defaultTypes]
-      })
+      types = ['全部', ...defaultTypes]
     } else {
       // 只使用存储中的分类（与分类管理页面保持一致）
       const allTypes = categories.map(cat => cat.name)
-      this.setData({
-        types: ['全部', ...allTypes]
-      })
+      types = ['全部', ...allTypes]
     }
+
+    const currentType = this.data.selectedType
+    const hasCurrentType = currentType && types.includes(currentType)
+    const selectedTypeIndex = hasCurrentType ? types.indexOf(currentType) : 0
+
+    this.setData({
+      types,
+      selectedType: hasCurrentType ? currentType : '',
+      selectedTypeIndex,
+      selectedTypeLabel: hasCurrentType ? currentType : '全部'
+    })
   },
 
   // 加载记录和统计
@@ -142,6 +154,9 @@ Page({
 
     // 生成饼图渐变
     const pieGradient = this.generatePieGradient(categoryStats)
+    const selectedMonthLabel = this.getSelectedMonthLabel(selectedMonth)
+    const selectedTypeLabel = selectedType || '全部'
+    const emptyText = this.getEmptyText(selectedMonthLabel, selectedTypeLabel)
 
     this.setData({
       records: formattedRecords,
@@ -149,7 +164,10 @@ Page({
       recordCount,
       dailyAvg,
       categoryStats,
-      pieGradient
+      pieGradient,
+      selectedMonthLabel,
+      selectedTypeLabel,
+      emptyText
     })
   },
 
@@ -189,6 +207,25 @@ Page({
       showTypeDropdown: false
     })
     this.loadRecords()
+  },
+
+  getSelectedMonthLabel(selectedMonth) {
+    const selectedOption = this.data.monthOptions.find(item => item.value === selectedMonth)
+
+    if (selectedOption) {
+      return selectedOption.label
+    }
+
+    const [year, month] = selectedMonth.split('-')
+    return `${year}年${parseInt(month)}月`
+  },
+
+  getEmptyText(monthLabel, typeLabel) {
+    if (typeLabel && typeLabel !== '全部') {
+      return `${monthLabel}暂无“${typeLabel}”记录`
+    }
+
+    return `${monthLabel}暂无记录`
   },
 
   // 生成饼图渐变

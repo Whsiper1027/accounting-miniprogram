@@ -81,6 +81,14 @@ Page({
   submitRecord() {
     const { selectedType, amount, note } = this.data
 
+    if (!selectedType) {
+      wx.showToast({
+        title: '请先添加分类',
+        icon: 'none'
+      })
+      return
+    }
+
     if (!amount || parseFloat(amount) <= 0) {
       wx.showToast({
         title: '请输入金额',

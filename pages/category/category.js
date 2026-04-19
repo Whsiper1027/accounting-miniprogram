@@ -10,13 +10,13 @@ Page({
 
   // 首次运行的默认分类
   defaultCategories: [
-    { id: 'default_1', name: '餐饮' },
-    { id: 'default_2', name: '交通' },
-    { id: 'default_3', name: '购物' },
-    { id: 'default_4', name: '游戏' },
-    { id: 'default_5', name: '羽毛球' },
-    { id: 'default_6', name: '理发' },
-    { id: 'default_7', name: '住宿' }
+    { id: 'default_1', name: '餐饮', builtin: true },
+    { id: 'default_2', name: '交通', builtin: true },
+    { id: 'default_3', name: '购物', builtin: true },
+    { id: 'default_4', name: '游戏', builtin: true },
+    { id: 'default_5', name: '羽毛球', builtin: true },
+    { id: 'default_6', name: '理发', builtin: true },
+    { id: 'default_7', name: '住宿', builtin: true }
   ],
 
   onLoad() {
@@ -68,7 +68,10 @@ Page({
 
   // 加载分类列表
   loadCategories() {
-    const categories = wx.getStorageSync('accounting_categories') || []
+    const categories = (wx.getStorageSync('accounting_categories') || []).map(cat => ({
+      ...cat,
+      builtin: Boolean(cat.builtin)
+    }))
     this.setData({
       categories: categories
     })
@@ -91,6 +94,14 @@ Page({
     const category = this.data.categories.find(cat => cat.id === id)
 
     if (category) {
+      if (category.builtin) {
+        wx.showToast({
+          title: '默认分类不支持编辑',
+          icon: 'none'
+        })
+        return
+      }
+
       this.setData({
         showPanel: true,
         isEditing: true,
@@ -104,6 +115,14 @@ Page({
   // 长按显示删除操作
   showDeleteAction(e) {
     const item = e.currentTarget.dataset.item
+
+    if (item.builtin) {
+      wx.showToast({
+        title: '默认分类不支持删除',
+        icon: 'none'
+      })
+      return
+    }
 
     wx.showActionSheet({
       itemList: ['编辑', '删除'],
@@ -131,6 +150,14 @@ Page({
 
           const targetCat = categories.find(cat => cat.id === id)
           console.log('要删除的分类:', targetCat)
+
+          if (targetCat && targetCat.builtin) {
+            wx.showToast({
+              title: '默认分类不支持删除',
+              icon: 'none'
+            })
+            return
+          }
 
           categories = categories.filter(cat => cat.id !== id)
           console.log('删除后分类数:', categories.length)
