@@ -1,9 +1,7 @@
 <view class="container">
   <view class="page-header">
-    <text class="page-eyebrow">Today</text>
     <view class="page-header-row">
       <text class="page-title">记一笔</text>
-      <text class="page-subtitle">像 iPhone 一样清爽地记录日常支出</text>
     </view>
   </view>
 
