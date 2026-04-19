@@ -1,9 +1,7 @@
 <view class="container">
   <view class="page-header">
-    <text class="page-eyebrow">Insights</text>
     <view class="page-header-row">
       <text class="page-title">账本</text>
-      <text class="page-subtitle">按月份和分类回看每一笔支出</text>
     </view>
   </view>
 
